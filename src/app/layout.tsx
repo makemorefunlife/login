@@ -30,11 +30,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const publishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+
+  if (!publishableKey) {
+    console.error('⚠️ Clerk Publishable Key가 설정되지 않았습니다. .env.local 파일에 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY를 추가하세요.');
+  }
+
   return (
-    <ClerkProvider>
+    <ClerkProvider publishableKey={publishableKey}>
       <html lang="en">
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-          <header className="flex justify-end items-center p-4 gap-4 h-16 border-b">
+          <header className="flex justify-end items-center p-4 gap-4 h-16 border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black sticky top-0 z-50">
             <SignedOut>
               <SignInButton mode="modal">
                 <button className="bg-white text-[#6c47ff] border border-[#6c47ff] rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer hover:bg-[#6c47ff] hover:text-white transition-colors">
