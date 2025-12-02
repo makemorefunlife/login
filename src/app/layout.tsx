@@ -30,14 +30,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const publishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
-
-  if (!publishableKey) {
-    console.error('⚠️ Clerk Publishable Key가 설정되지 않았습니다. .env.local 파일에 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY를 추가하세요.');
-  }
+  const publishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || '';
 
   return (
-    <ClerkProvider publishableKey={publishableKey}>
+    <ClerkProvider publishableKey={publishableKey || undefined}>
       <html lang="en">
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
           <header className="flex justify-end items-center p-4 gap-4 h-16 border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black sticky top-0 z-50">
